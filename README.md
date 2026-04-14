@@ -35,8 +35,8 @@ API data comes from [SpaceX REST API v4](https://api.spacexdata.com/v4) via `POS
 - [x] Types & API layer (launches, rockets, launchpads, query types)
 - [x] Query client with retry/backoff for 429/5xx
 - [x] useLocalStorage hook
-- [ ] Navbar + Footer layout
-- [ ] Homepage landing page
+- [x] Navbar + Footer layout
+- [x] Homepage landing page
 - [ ] LaunchCard, LaunchFilters, LaunchSearch, LaunchList, LaunchSkeleton
 - [ ] Launches list page with infinite scroll + virtualization
 - [ ] Launch detail page (server component)

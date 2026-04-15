@@ -11,6 +11,7 @@ import type { LaunchQueryParams, LaunchQueryFilters, LaunchQuerySort, LaunchesPa
 import { LaunchCard } from "./LaunchCard";
 import { LaunchSkeleton } from "./LaunchSkeleton";
 import { Button } from "@/components/ui/button";
+import { Skeleton } from "../ui/skeleton";
 
 const PAGE_SIZE = 20;
 const ROW_HEIGHT = 120;
@@ -109,13 +110,16 @@ export function LaunchList() {
     return () => observer.disconnect();
   }, [onIntersect]);
 
-  if (isLoading) {
+  if (isLoading  ) {
     return (
+      <>
+       <Skeleton className="w-30 h-5 mb-3" />
       <div className="flex flex-col gap-1">
         {Array.from({ length: 8 }).map((_, i) => (
           <LaunchSkeleton key={i} />
         ))}
       </div>
+        </>
     );
   }
 
@@ -124,7 +128,7 @@ export function LaunchList() {
       <div className="flex flex-col items-center gap-4 py-12 text-center">
         <AlertCircle className="size-10 text-destructive" />
         <p className="text-muted-foreground">
-          {error instanceof Error ? error.message : "Failed to load launches"}
+          {error?.message ?? "Failed to load launches"}
         </p>
         <Button variant="outline" onClick={() => fetchNextPage()}>
           Try again

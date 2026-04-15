@@ -1,75 +1,83 @@
-export interface LaunchFairings {
-  reused: boolean;
-  recovery_attempt: boolean;
-  recovered: boolean;
-  ships: string[];
-}
+import { z } from "zod";
 
-export interface LaunchLinks {
-  patch: {
-    small: string | null;
-    large: string | null;
-  };
-  reddit: {
-    campaign: string | null;
-    launch: string | null;
-    media: string | null;
-    recovery: string | null;
-  };
-  flickr: {
-    small: string[];
-    original: string[];
-  };
-  presskit: string | null;
-  webcast: string | null;
-  youtube_id: string | null;
-  article: string | null;
-  wikipedia: string | null;
-}
+export const launchFairingsSchema = z.object({
+  reused: z.boolean(),
+  recovery_attempt: z.boolean(),
+  recovered: z.boolean(),
+  ships: z.array(z.string()),
+});
 
-export interface LaunchCore {
-  core: string;
-  flight: number;
-  gridfins: boolean;
-  legs: boolean;
-  reused: boolean;
-  landing_attempt: boolean;
-  landing_success: boolean | null;
-  landing_type: string | null;
-  landpad: string | null;
-}
+export const launchLinksSchema = z.object({
+  patch: z.object({
+    small: z.string().nullable(),
+    large: z.string().nullable(),
+  }),
+  reddit: z.object({
+    campaign: z.string().nullable(),
+    launch: z.string().nullable(),
+    media: z.string().nullable(),
+    recovery: z.string().nullable(),
+  }),
+  flickr: z.object({
+    small: z.array(z.string()),
+    original: z.array(z.string()),
+  }),
+  presskit: z.string().nullable(),
+  webcast: z.string().nullable(),
+  youtube_id: z.string().nullable(),
+  article: z.string().nullable(),
+  wikipedia: z.string().nullable(),
+});
 
-export interface LaunchFailure {
-  time: number | null;
-  altitude: number | null;
-  reason: string;
-}
+export const launchCoreSchema = z.object({
+  core: z.string(),
+  flight: z.number(),
+  gridfins: z.boolean(),
+  legs: z.boolean(),
+  reused: z.boolean(),
+  landing_attempt: z.boolean(),
+  landing_success: z.boolean().nullable(),
+  landing_type: z.string().nullable(),
+  landpad: z.string().nullable(),
+});
 
-export interface Launch {
-  fairings: LaunchFairings | null;
-  links: LaunchLinks;
-  static_fire_date_utc: string | null;
-  static_fire_date_unix: number | null;
-  tdb: boolean;
-  net: boolean;
-  window: number | null;
-  rocket: string;
-  success: boolean | null;
-  failures: LaunchFailure[];
-  details: string | null;
-  crew: string[];
-  ships: string[];
-  capsules: string[];
-  payloads: string[];
-  launchpad: string;
-  auto_update: boolean;
-  flight_number: number;
-  name: string;
-  date_utc: string;
-  date_unix: number;
-  date_local: string;
-  date_precision: string;
-  upcoming: boolean;
-  cores: LaunchCore[];
-  id: string;
-}
+export const launchFailureSchema = z.object({
+  time: z.number().nullable(),
+  altitude: z.number().nullable(),
+  reason: z.string(),
+});
+
+export const launchSchema = z.object({
+  fairings: launchFairingsSchema.nullable(),
+  links: launchLinksSchema,
+  static_fire_date_utc: z.string().nullable(),
+  static_fire_date_unix: z.number().nullable(),
+  tdb: z.boolean(),
+  net: z.boolean(),
+  window: z.number().nullable(),
+  rocket: z.string(),
+  success: z.boolean().nullable(),
+  failures: z.array(launchFailureSchema),
+  details: z.string().nullable(),
+  crew: z.array(z.string()),
+  ships: z.array(z.string()),
+  capsules: z.array(z.string()),
+  payloads: z.array(z.string()),
+  launchpad: z.string(),
+  auto_update: z.boolean(),
+  flight_number: z.number(),
+  name: z.string(),
+  date_utc: z.string(),
+  date_unix: z.number(),
+  date_local: z.string(),
+  date_precision: z.string(),
+  upcoming: z.boolean(),
+  cores: z.array(launchCoreSchema),
+  id: z.string(),
+});
+
+export type LaunchFairings = z.infer<typeof launchFairingsSchema>;
+export type LaunchLinks = z.infer<typeof launchLinksSchema>;
+export type LaunchCore = z.infer<typeof launchCoreSchema>;
+export type LaunchFailure = z.infer<typeof launchFailureSchema>;
+export type Launch = z.infer<typeof launchSchema>;

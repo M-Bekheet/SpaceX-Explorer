@@ -16,6 +16,7 @@ Open [http://localhost:3000](http://localhost:3000).
 - **Next.js 16** (App Router)
 - **TypeScript**
 - **TanStack Query** — data fetching, caching, deduplication
+- **Zod** — runtime API response validation
 - **Tailwind CSS** + **shadcn/ui** — styling & components
 - **react-window** — list virtualization
 - **recharts** — charts (launches per year / success rate)
@@ -28,11 +29,12 @@ Open [http://localhost:3000](http://localhost:3000).
 - `/launches/[id]` — server component fetching launch + rocket + launchpad
 - `/favorites` — client component backed by localStorage
 
-API data comes from [SpaceX REST API v4](https://api.spacexdata.com/v4) via `POST /launches/query` for paginated filtering and `GET` endpoints for rockets/launchpads.
+API data comes from [SpaceX REST API v4](https://api.spacexdata.com/v4) via `POST /launches/query` for paginated filtering and `GET` endpoints for rockets/launchpads. All API responses are validated at runtime with Zod schemas to guard against contract changes.
 
 ## TODOs
 
 - [x] Types & API layer (launches, rockets, launchpads, query types)
+- [x] Zod runtime validation for all API responses
 - [x] Query client with retry/backoff for 429/5xx
 - [x] useLocalStorage hook
 - [x] Navbar + Footer layout

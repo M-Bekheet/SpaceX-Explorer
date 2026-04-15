@@ -1,67 +1,76 @@
-export interface RocketFirstStage {
-  thrust_sea_level: { kN: number; lbf: number };
-  thrust_vacuum: { kN: number; lbf: number };
-  reusable: boolean;
-  engines: number;
-  fuel_amount_tons: number;
-  burn_time_sec: number | null;
-}
+import { z } from "zod";
 
-export interface RocketSecondStage {
-  thrust: { kN: number; lbf: number };
-  payloads: {
-    composite_fairing: {
-      height: { meters: number | null; feet: number | null };
-      diameter: { meters: number | null; feet: number | null };
-    };
-    option_1: string;
-  };
-  reusable: boolean;
-  engines: number;
-  fuel_amount_tons: number;
-  burn_time_sec: number | null;
-}
+export const rocketFirstStageSchema = z.object({
+  thrust_sea_level: z.object({ kN: z.number(), lbf: z.number() }),
+  thrust_vacuum: z.object({ kN: z.number(), lbf: z.number() }),
+  reusable: z.boolean(),
+  engines: z.number(),
+  fuel_amount_tons: z.number(),
+  burn_time_sec: z.number().nullable(),
+});
 
-export interface RocketEngines {
-  isp: { sea_level: number; vacuum: number };
-  thrust_sea_level: { kN: number; lbf: number };
-  thrust_vacuum: { kN: number; lbf: number };
-  number: number;
-  type: string;
-  version: string;
-  layout: string;
-  engine_loss_max: number;
-  propellant_1: string;
-  propellant_2: string;
-  thrust_to_weight: number;
-}
+export const rocketSecondStageSchema = z.object({
+  thrust: z.object({ kN: z.number(), lbf: z.number() }),
+  payloads: z.object({
+    composite_fairing: z.object({
+      height: z.object({ meters: z.number().nullable(), feet: z.number().nullable() }),
+      diameter: z.object({ meters: z.number().nullable(), feet: z.number().nullable() }),
+    }),
+    option_1: z.string(),
+  }),
+  reusable: z.boolean(),
+  engines: z.number(),
+  fuel_amount_tons: z.number(),
+  burn_time_sec: z.number().nullable(),
+});
 
-export interface Rocket {
-  height: { meters: number | null; feet: number | null };
-  diameter: { meters: number | null; feet: number | null };
-  mass: { kg: number; lb: number };
-  first_stage: RocketFirstStage;
-  second_stage: RocketSecondStage;
-  engines: RocketEngines;
-  landing_legs: { number: number; material: string | null };
-  payload_weights: {
-    id: string;
-    name: string;
-    kg: number;
-    lb: number;
-  }[];
-  flickr_images: string[];
-  name: string;
-  type: string;
-  active: boolean;
-  stages: number;
-  boosters: number;
-  cost_per_launch: number;
-  success_rate_pct: number;
-  first_flight: string;
-  country: string;
-  company: string;
-  wikipedia: string;
-  description: string;
-  id: string;
-}
+export const rocketEnginesSchema = z.object({
+  isp: z.object({ sea_level: z.number(), vacuum: z.number() }),
+  thrust_sea_level: z.object({ kN: z.number(), lbf: z.number() }),
+  thrust_vacuum: z.object({ kN: z.number(), lbf: z.number() }),
+  number: z.number(),
+  type: z.string(),
+  version: z.string(),
+  layout: z.string(),
+  engine_loss_max: z.number(),
+  propellant_1: z.string(),
+  propellant_2: z.string(),
+  thrust_to_weight: z.number(),
+});
+
+export const rocketSchema = z.object({
+  height: z.object({ meters: z.number().nullable(), feet: z.number().nullable() }),
+  diameter: z.object({ meters: z.number().nullable(), feet: z.number().nullable() }),
+  mass: z.object({ kg: z.number(), lb: z.number() }),
+  first_stage: rocketFirstStageSchema,
+  second_stage: rocketSecondStageSchema,
+  engines: rocketEnginesSchema,
+  landing_legs: z.object({ number: z.number(), material: z.string().nullable() }),
+  payload_weights: z.array(
+    z.object({
+      id: z.string(),
+      name: z.string(),
+      kg: z.number(),
+      lb: z.number(),
+    })
+  ),
+  flickr_images: z.array(z.string()),
+  name: z.string(),
+  type: z.string(),
+  active: z.boolean(),
+  stages: z.number(),
+  boosters: z.number(),
+  cost_per_launch: z.number(),
+  success_rate_pct: z.number(),
+  first_flight: z.string(),
+  country: z.string(),
+  company: z.string(),
+  wikipedia: z.string(),
+  description: z.string(),
+  id: z.string(),
+});
+
+export type RocketFirstStage = z.infer<typeof rocketFirstStageSchema>;
+export type RocketSecondStage = z.infer<typeof rocketSecondStageSchema>;
+export type RocketEngines = z.infer<typeof rocketEnginesSchema>;
+export type Rocket = z.infer<typeof rocketSchema>;

@@ -1,18 +1,22 @@
-import type { Launch } from "./launch";
+import { z } from "zod";
+import { launchSchema } from "./launch";
 
-export interface SpaceXPaginatedResponse<T> {
-  docs: T[];
-  totalDocs: number;
-  offset: number;
-  limit: number;
-  totalPages: number;
-  page: number;
-  pagingCounter: number;
-  hasPrevPage: boolean;
-  hasNextPage: boolean;
-  prevPage: number | null;
-  nextPage: number | null;
-}
+export const spaceXPaginatedResponseSchema = <T extends z.ZodTypeAny>(itemSchema: T) =>
+  z.object({
+    docs: z.array(itemSchema),
+    totalDocs: z.number(),
+    offset: z.number(),
+    limit: z.number(),
+    totalPages: z.number(),
+    page: z.number(),
+    pagingCounter: z.number(),
+    hasPrevPage: z.boolean(),
+    hasNextPage: z.boolean(),
+    prevPage: z.number().nullable(),
+    nextPage: z.number().nullable(),
+  });
+
+export const launchesPageResponseSchema = spaceXPaginatedResponseSchema(launchSchema);
 
 export interface LaunchQueryFilters {
   upcoming?: boolean;
@@ -33,4 +37,18 @@ export interface LaunchQueryParams {
   sort?: LaunchQuerySort;
 }
 
-export type LaunchesPageResponse = SpaceXPaginatedResponse<Launch>;
+export type SpaceXPaginatedResponse<T> = {
+  docs: T[];
+  totalDocs: number;
+  offset: number;
+  limit: number;
+  totalPages: number;
+  page: number;
+  pagingCounter: number;
+  hasPrevPage: boolean;
+  hasNextPage: boolean;
+  prevPage: number | null;
+  nextPage: number | null;
+};
+
+export type LaunchesPageResponse = SpaceXPaginatedResponse<z.infer<typeof launchSchema>>;

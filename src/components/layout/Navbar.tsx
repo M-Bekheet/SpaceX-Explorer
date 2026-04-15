@@ -7,6 +7,7 @@ import { ModeToggle } from "@/components/ui/mode-toggle";
 const navLinks = [
   { href: "/", label: "Home" },
   { href: "/launches", label: "Launches" },
+  { href: "/charts", label: "Charts" },
   { href: "/favorites", label: "Favorites" },
 ];
 

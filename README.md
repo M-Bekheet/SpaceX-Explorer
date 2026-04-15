@@ -44,7 +44,7 @@ API data comes from [SpaceX REST API v4](https://api.spacexdata.com/v4) via `POS
 - [x] Launch detail page (server component)
 - [x] FavoriteButton component
 - [x] Favorites page
-- [ ] Charts (launches per year / success rate)
+- [x] Charts (launches per year / success rate)
 - [ ] Polish error/loading states
 - [ ] Accessibility pass (ARIA, focus management)
 - [ ] SSR/SSG for launch detail pre-rendering

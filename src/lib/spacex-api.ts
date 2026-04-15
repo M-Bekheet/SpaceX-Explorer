@@ -118,6 +118,33 @@ export async function fetchLaunches(
   });
 }
 
+const launchSummarySchema = z.object({
+  date_utc: z.string().nullable(),
+  success: z.boolean().nullable(),
+  upcoming: z.boolean(),
+});
+export type LaunchSummary = z.infer<typeof launchSummarySchema>;
+
+const summaryDocsSchema = z.object({ docs: z.array(launchSummarySchema) });
+
+export async function fetchLaunchSummaries(): Promise<LaunchSummary[]> {
+  const res = await spacexFetch(
+    "/launches/query",
+    summaryDocsSchema,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        query: {},
+        options: {
+          pagination: false,
+          select: "date_utc success upcoming",
+        },
+      }),
+    }
+  );
+  return res.docs;
+}
+
 export async function fetchLaunchById(id: string): Promise<Launch> {
   return spacexFetch(`/launches/${id}`, launchSchema);
 }

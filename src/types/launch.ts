@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 export const launchFairingsSchema = z.object({
-  reused: z.boolean(),
-  recovery_attempt: z.boolean(),
-  recovered: z.boolean(),
+  reused: z.boolean().nullable(),
+  recovery_attempt: z.boolean().nullable(),
+  recovered: z.boolean().nullable(),
   ships: z.array(z.string()),
 });
 
@@ -30,12 +30,12 @@ export const launchLinksSchema = z.object({
 });
 
 export const launchCoreSchema = z.object({
-  core: z.string(),
-  flight: z.number(),
-  gridfins: z.boolean(),
-  legs: z.boolean(),
-  reused: z.boolean(),
-  landing_attempt: z.boolean(),
+  core: z.string().nullable(),
+  flight: z.number().nullable(),
+  gridfins: z.boolean().nullable(),
+  legs: z.boolean().nullable(),
+  reused: z.boolean().nullable(),
+  landing_attempt: z.boolean().nullable(),
   landing_success: z.boolean().nullable(),
   landing_type: z.string().nullable(),
   landpad: z.string().nullable(),
@@ -47,15 +47,15 @@ export const launchFailureSchema = z.object({
   reason: z.string(),
 });
 
-export const launchSchema = z.object({
+export const launchSchema = z.looseObject({
   fairings: launchFairingsSchema.nullable(),
   links: launchLinksSchema,
   static_fire_date_utc: z.string().nullable(),
   static_fire_date_unix: z.number().nullable(),
-  tdb: z.boolean(),
-  net: z.boolean(),
+  tbd: z.boolean().nullable(),
+  net: z.boolean().nullable(),
   window: z.number().nullable(),
-  rocket: z.string(),
+  rocket: z.string().nullable(),
   success: z.boolean().nullable(),
   failures: z.array(launchFailureSchema),
   details: z.string().nullable(),
@@ -63,14 +63,14 @@ export const launchSchema = z.object({
   ships: z.array(z.string()),
   capsules: z.array(z.string()),
   payloads: z.array(z.string()),
-  launchpad: z.string(),
-  auto_update: z.boolean(),
+  launchpad: z.string().nullable(),
+  auto_update: z.boolean().nullable(),
   flight_number: z.number(),
   name: z.string(),
-  date_utc: z.string(),
-  date_unix: z.number(),
-  date_local: z.string(),
-  date_precision: z.string(),
+  date_utc: z.string().nullable(),
+  date_unix: z.number().nullable(),
+  date_local: z.string().nullable(),
+  date_precision: z.string().nullable(),
   upcoming: z.boolean(),
   cores: z.array(launchCoreSchema),
   id: z.string(),

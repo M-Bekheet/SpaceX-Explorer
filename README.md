@@ -39,10 +39,10 @@ API data comes from [SpaceX REST API v4](https://api.spacexdata.com/v4) via `POS
 - [x] useLocalStorage hook
 - [x] Navbar + Footer layout
 - [x] Homepage landing page
-- [ ] LaunchCard, LaunchFilters, LaunchSearch, LaunchList, LaunchSkeleton
-- [ ] Launches list page with infinite scroll + virtualization
+- [x] LaunchCard, LaunchFilters, LaunchSearch, LaunchList, LaunchSkeleton
+- [x] Launches list page with infinite scroll + virtualization
 - [ ] Launch detail page (server component)
-- [ ] FavoriteButton component
+- [x] FavoriteButton component
 - [ ] Favorites page
 - [ ] Charts (launches per year / success rate)
 - [ ] Polish error/loading states

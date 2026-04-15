@@ -25,20 +25,20 @@ export const rocketSecondStageSchema = z.object({
 });
 
 export const rocketEnginesSchema = z.object({
-  isp: z.object({ sea_level: z.number(), vacuum: z.number() }),
+  isp: z.object({ sea_level: z.number().nullable(), vacuum: z.number().nullable() }),
   thrust_sea_level: z.object({ kN: z.number(), lbf: z.number() }),
   thrust_vacuum: z.object({ kN: z.number(), lbf: z.number() }),
   number: z.number(),
   type: z.string(),
   version: z.string(),
-  layout: z.string(),
-  engine_loss_max: z.number(),
+  layout: z.string().nullable(),
+  engine_loss_max: z.number().nullable(),
   propellant_1: z.string(),
   propellant_2: z.string(),
-  thrust_to_weight: z.number(),
+  thrust_to_weight: z.number().nullable(),
 });
 
-export const rocketSchema = z.object({
+export const rocketSchema = z.looseObject({
   height: z.object({ meters: z.number().nullable(), feet: z.number().nullable() }),
   diameter: z.object({ meters: z.number().nullable(), feet: z.number().nullable() }),
   mass: z.object({ kg: z.number(), lb: z.number() }),
@@ -65,8 +65,8 @@ export const rocketSchema = z.object({
   first_flight: z.string(),
   country: z.string(),
   company: z.string(),
-  wikipedia: z.string(),
-  description: z.string(),
+  wikipedia: z.string().nullable(),
+  description: z.string().nullable(),
   id: z.string(),
 });
 

@@ -5,7 +5,7 @@ export const spaceXPaginatedResponseSchema = <T extends z.ZodTypeAny>(itemSchema
   z.object({
     docs: z.array(itemSchema),
     totalDocs: z.number(),
-    offset: z.number(),
+    offset: z.number().optional(),
     limit: z.number(),
     totalPages: z.number(),
     page: z.number(),
@@ -40,7 +40,7 @@ export interface LaunchQueryParams {
 export type SpaceXPaginatedResponse<T> = {
   docs: T[];
   totalDocs: number;
-  offset: number;
+  offset?: number;
   limit: number;
   totalPages: number;
   page: number;

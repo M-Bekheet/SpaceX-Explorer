@@ -28,8 +28,13 @@ export class SpaceXValidationError extends Error {
     public readonly endpoint: string,
     public readonly cause: z.ZodError
   ) {
+    const MAX_ISSUES = 2;
+    const issues = cause.issues.slice(0, MAX_ISSUES);
+    const suffix = cause.issues.length > MAX_ISSUES
+      ? ` (+${cause.issues.length - MAX_ISSUES} more)`
+      : "";
     super(
-      `API response validation failed for ${endpoint}: ${cause.issues.map((e) => e.message).join(", ")}`
+      `Validation failed for ${endpoint}: ${issues.map((e) => e.message).join(", ")}${suffix}`
     );
     this.name = "SpaceXValidationError";
   }

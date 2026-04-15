@@ -1,6 +1,7 @@
 "use client";
 
 import { ExternalLink } from "lucide-react";
+import Image from "next/image";
 import type { Launch } from "@/types/launch";
 import type { Rocket } from "@/types/rocket";
 import type { LaunchPad } from "@/types/launchpad";
@@ -93,11 +94,12 @@ export function LaunchDetail({ launch, rocket, launchpad }: LaunchDetailProps) {
                 key={i}
                 className="overflow-hidden rounded-lg border bg-muted"
               >
-                <img
+                <Image
                   src={src}
                   alt={`${launch.name} photo ${i + 1}`}
                   className="size-full object-cover"
-                  loading="lazy"
+                  width={400}
+                  height={300}
                 />
               </div>
             ))}
@@ -149,10 +151,12 @@ export function LaunchDetail({ launch, rocket, launchpad }: LaunchDetailProps) {
           <div className="rounded-xl border p-4">
             <div className="flex items-center gap-3 mb-3">
               {rocket.flickr_images[0] && (
-                <img
+                <Image
                   src={rocket.flickr_images[0]}
                   alt={rocket.name}
                   className="size-12 rounded-lg object-cover"
+                  width={48}
+                  height={48}
                 />
               )}
               <div>

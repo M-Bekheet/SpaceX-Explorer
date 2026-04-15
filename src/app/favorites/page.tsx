@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Heart, Trash2 } from "lucide-react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useQueries } from "@tanstack/react-query";
@@ -89,11 +90,12 @@ export default function FavoritesPage() {
               >
                 <div className="flex size-12 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted">
                   {launch.links.patch.small ? (
-                    <img
+                    <Image
                       src={launch.links.patch.small}
                       alt={`${launch.name} patch`}
                       className="size-full object-contain p-1"
-                      loading="lazy"
+                      width={48}
+                      height={48}
                     />
                   ) : (
                     <span className="text-lg font-bold text-muted-foreground">

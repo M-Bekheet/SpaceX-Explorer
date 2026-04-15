@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Rocket } from "lucide-react";
 import type { Launch } from "@/types/launch";
 import { Badge } from "@/components/ui/badge";
@@ -26,11 +27,12 @@ export function LaunchCard({ launch }: LaunchCardProps) {
     >
       <div className="flex size-16 shrink-0 items-center justify-center overflow-hidden rounded-lg bg-muted">
         {launch.links.patch.small ? (
-          <img
+          <Image
             src={launch.links.patch.small}
             alt={`${launch.name} patch`}
             className="size-full object-contain p-1"
-            loading="lazy"
+            width={64}
+            height={64}
           />
         ) : (
           <Rocket className="size-8 text-muted-foreground" />

@@ -1,5 +1,6 @@
 {
   "name": "spacex-explorer",
+  "author": "Mahmoud Bekheet",
   "version": "0.1.0",
   "private": true,
   "scripts": {

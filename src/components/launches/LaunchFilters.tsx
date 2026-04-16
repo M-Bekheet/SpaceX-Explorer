@@ -84,12 +84,12 @@ export function LaunchFilters() {
         </Button>
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="flex flex-wrap items-center gap-2">
         <Input
           type="date"
           value={startDate}
           onChange={(e) => setFilter("startDate", e.target.value || null)}
-          className="h-7 w-36 text-xs"
+          className="h-7 w-full min-w-0 sm:w-36 text-xs"
           aria-label="Start date"
         />
         <span className="text-muted-foreground">to</span>
@@ -97,7 +97,7 @@ export function LaunchFilters() {
           type="date"
           value={endDate}
           onChange={(e) => setFilter("endDate", e.target.value || null)}
-          className="h-7 w-36 text-xs"
+          className="h-7 w-full min-w-0 sm:w-36 text-xs"
           aria-label="End date"
         />
       </div>

@@ -11,7 +11,7 @@ export default function FavoritesError({
   reset: () => void;
 }) {
   return (
-    <div className="mx-auto flex max-w-4xl flex-col items-center gap-4 px-4 py-16 text-center">
+    <div className="mx-auto flex max-w-5xl flex-col items-center gap-4 px-4 py-16 text-center">
       <AlertCircle className="size-12 text-destructive" />
       <h2 className="text-xl font-semibold">Something went wrong</h2>
       <p className="text-sm text-muted-foreground">{error.message}</p>

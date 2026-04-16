@@ -31,7 +31,7 @@ export function LaunchDetail({ launch, rocket, launchpad }: LaunchDetailProps) {
   const flickrImages = launch.links.flickr.original.filter(Boolean);
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-8">
       <div className="mb-6 flex items-start justify-between gap-4">
         <div>
           <div className="mb-2 flex items-center gap-3">

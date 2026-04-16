@@ -49,7 +49,7 @@ export default function FavoritesPage() {
   }
 
   return (
-    <div className="mx-auto max-w-4xl px-4 py-8">
+    <div className="mx-auto max-w-5xl px-4 py-8">
       <h1 className="mb-6 text-2xl font-bold">Favorites</h1>
 
       {!hydrated ? (

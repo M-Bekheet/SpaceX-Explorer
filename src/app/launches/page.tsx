@@ -3,6 +3,8 @@ import { LaunchList } from "@/components/launches/LaunchList";
 import { LaunchFilters } from "@/components/launches/LaunchFilters";
 import { LaunchSearch } from "@/components/launches/LaunchSearch";
 
+export const dynamic = "force-dynamic";
+
 export default function LaunchesPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-8">

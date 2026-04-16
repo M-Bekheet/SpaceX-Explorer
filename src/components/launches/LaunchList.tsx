@@ -55,10 +55,14 @@ export function LaunchList() {
     return f;
   }, [searchParams]);
 
-  const sort: LaunchQuerySort = useMemo(
-    () => ({ field: "date_utc", direction: "desc" as const }),
-    []
-  );
+  const sort: LaunchQuerySort = useMemo(() => {
+    const fieldParam = searchParams.get("sort");
+    const dirParam = searchParams.get("dir");
+    return {
+      field: fieldParam === "name" || fieldParam === "flight_number" ? fieldParam : "date_utc",
+      direction: dirParam === "asc" ? "asc" : "desc",
+    };
+  }, [searchParams]);
 
   const params: LaunchQueryParams = useMemo(
     () => ({ page: 1, limit: PAGE_SIZE, filters, sort }),

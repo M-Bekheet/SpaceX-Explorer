@@ -1,8 +1,15 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
+import { ArrowDown, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+const SORT_OPTIONS = [
+  { value: "date_utc", label: "Date" },
+  { value: "name", label: "Name" },
+  { value: "flight_number", label: "Flight #" },
+] as const;
 
 export function LaunchFilters() {
   const router = useRouter();
@@ -12,6 +19,8 @@ export function LaunchFilters() {
   const successParam = searchParams.get("success");
   const startDate = searchParams.get("startDate") ?? "";
   const endDate = searchParams.get("endDate") ?? "";
+  const sortField = searchParams.get("sort") ?? "date_utc";
+  const sortDir = searchParams.get("dir") ?? "desc";
 
   function setFilter(key: string, value: string | null) {
     const params = new URLSearchParams(searchParams.toString());
@@ -100,6 +109,34 @@ export function LaunchFilters() {
           className="h-7 w-full min-w-0 sm:w-36 text-xs"
           aria-label="End date"
         />
+      </div>
+
+      <div className="flex items-center gap-1">
+        <select
+          value={sortField}
+          onChange={(e) => setFilter("sort", e.target.value)}
+          aria-label="Sort by"
+          className="h-7 rounded-md border bg-background px-2 text-xs text-foreground"
+        >
+          {SORT_OPTIONS.map((opt) => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </select>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="size-7"
+          onClick={() => setFilter("dir", sortDir === "desc" ? "asc" : "desc")}
+          aria-label={sortDir === "desc" ? "Sort ascending" : "Sort descending"}
+        >
+          {sortDir === "desc" ? (
+            <ArrowDown className="size-4" />
+          ) : (
+            <ArrowUp className="size-4" />
+          )}
+        </Button>
       </div>
 
       {hasFilters && (

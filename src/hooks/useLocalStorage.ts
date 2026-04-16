@@ -18,16 +18,21 @@ export function useLocalStorage<T>(
 
   const setValue = useCallback(
     (value: T | ((prev: T) => T)) => {
-      setStoredValue((prev) => {
-        const nextValue =
-          value instanceof Function ? value(prev) : value;
-        if (typeof window !== "undefined") {
-          window.localStorage.setItem(key, JSON.stringify(nextValue));
-        }
-        return nextValue;
-      });
+      let current: T;
+      try {
+        const item = window.localStorage.getItem(key);
+        current = item ? (JSON.parse(item) as T) : initialValue;
+      } catch {
+        current = initialValue;
+      }
+      const nextValue =
+        value instanceof Function ? value(current) : value;
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(key, JSON.stringify(nextValue));
+      }
+      setStoredValue(nextValue);
     },
-    [key]
+    [key, initialValue]
   );
 
   return [storedValue, setValue];

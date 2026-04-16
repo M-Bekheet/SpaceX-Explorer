@@ -22,7 +22,7 @@ function formatDate(dateUtc: string | null): string {
 }
 
 export default function FavoritesPage() {
-  const [favorites, setFavorites] = useLocalStorage<string[]>(
+  const [favorites, setFavorites, hydrated] = useLocalStorage<string[]>(
     "spacex-favorites",
     []
   );
@@ -52,7 +52,19 @@ export default function FavoritesPage() {
     <div className="mx-auto max-w-4xl px-4 py-8">
       <h1 className="mb-6 text-2xl font-bold">Favorites</h1>
 
-      {favorites.length === 0 ? (
+      {!hydrated ? (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <div key={i} className="flex gap-3 rounded-xl border p-4">
+              <Skeleton className="size-12 shrink-0 rounded-lg" />
+              <div className="flex-1 space-y-2">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-3 w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : favorites.length === 0 ? (
         <div className="flex flex-col items-center gap-4 py-16 text-center">
           <Heart className="size-12 text-muted-foreground/50" />
           <p className="text-lg font-medium text-muted-foreground">

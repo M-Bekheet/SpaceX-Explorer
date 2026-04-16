@@ -1,20 +1,26 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 export function useLocalStorage<T>(
   key: string,
   initialValue: T
-): [T, (value: T | ((prev: T) => T)) => void] {
-  const [storedValue, setStoredValue] = useState<T>(() => {
-    if (typeof window === "undefined") return initialValue;
+): [T, (value: T | ((prev: T) => T)) => void, boolean] {
+  const [storedValue, setStoredValue] = useState<T>(initialValue);
+  const [hydrated, setHydrated] = useState(false);
+
+  const serialized = JSON.stringify(initialValue);
+
+  useEffect(() => {
     try {
       const item = window.localStorage.getItem(key);
-      return item ? (JSON.parse(item) as T) : initialValue;
+      setStoredValue(item ? (JSON.parse(item) as T) : initialValue);
     } catch {
-      return initialValue;
+      setStoredValue(initialValue);
     }
-  });
+    setHydrated(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key, serialized]);
 
   const setValue = useCallback(
     (value: T | ((prev: T) => T)) => {
@@ -32,8 +38,8 @@ export function useLocalStorage<T>(
       }
       setStoredValue(nextValue);
     },
-    [key, initialValue]
+    [key, serialized]
   );
 
-  return [storedValue, setValue];
+  return [storedValue, setValue, hydrated];
 }
